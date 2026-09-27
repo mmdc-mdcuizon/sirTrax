@@ -48,7 +48,7 @@ An opinionated, browser-based weekly cadence planner designed to build consisten
 
 This application was developed progressively following structured sprint planning and technical constraints. For comprehensive documentation regarding webpage structures, feature priority matrices, interaction mappings, implementation dependencies, and development reflections, please refer to the complete planning worksheet:
 
-📄 **[View Full Application Development Workflow Worksheet](https://docs.google.com/spreadsheets/d/1sG5ybAjzruohheh9A48HBCbZCPGFaekcK2JMmOz7NbI/edit?usp=drive_link)** 
+📄 <strong><a href="PASTE_YOUR_URL_HERE" target="_blank" rel="noopener noreferrer">View Full Application Development Workflow Worksheet</a></strong>
 
 ---
 
