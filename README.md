@@ -3,70 +3,106 @@
 # ⚡ sirTrax
 ### Weekly Cadence & Daily Focus Planner
 
-An opinionated, zero-dependency weekly cadence planner designed to bridge the gap between daily execution and recurring habit systems across **Work**, **School**, and **Health**.
+An opinionated, browser-based weekly cadence planner designed to build consistency and eliminate app fatigue through automated recurring routines across **Work**, **School**, and **Health**.
 
-[![Vanilla JS](https://img.shields.io/badge/Vanilla-JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](#)
-[![HTML5](https://img.shields.io/badge/HTML5-Semantic%20Markup-E34F26?style=flat-square&logo=html5&logoColor=white)](#)
-[![CSS3](https://img.shields.io/badge/CSS3-Custom%20Tokens-1572B6?style=flat-square&logo=css3&logoColor=white)](#)
-[![Material You](https://img.shields.io/badge/Design-Material%20You%20Dark-8AB4F8?style=flat-square)](#)
-[![Accessibility](https://img.shields.io/badge/WAI--ARIA-Accessible-success?style=flat-square)](#)
-[![Zero Dependencies](https://img.shields.io/badge/Dependencies-0%20(Pure%20Vanilla)-brightgreen?style=flat-square)](#)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](#)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](#)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](#)
 
 ---
 
 ### 🎓 Academic Context
 **Institution:** Mapúa Malayan Digital College (MMDC)  
 **Program:** Bachelor of Science in Information Technology (Major in Software Development)  
-**Course:** Web Systems and Technologies (WebSys)  
-**Deliverable:** Milestone 1 – Front-End Architecture & Usability Prototype  
-**Author:** Marc Denise Pasa Cuizon  
+**Course / Section:** Web Systems and Technology (MO-IT161) — H3101  
+**Deliverable:** Milestone 1: Interactive Frontend Web Application  
+**Author:** Marc Denise Cuizon  
 
 ---
 
 </div>
 
-## 📸 Interface Previews & System Backbone
+## 📸 Interface Previews & Structure Backbone
 
 <div align="center">
 
 ### Application Views
-*Material You dark surfaces with live progress tracking, day scheduling, and three-pillar taxonomy.*
+*Material You dark interface featuring live execution progress tracking, weekday habit scheduling, and pillar filtering.*
 
-| Daily Dashboard View | Weekly Cadence Setup |
+| Daily Execution Dashboard | Weekly Cadence Planner |
 | :---: | :---: |
-| ![Daily Dashboard](assets/screenshots/dashboard.png) | ![Weekly Cadence Planner](assets/screenshots/setup.png) |
+| ![Daily Execution Dashboard](assets/screenshots/dashboard.png) | ![Weekly Cadence Planner](assets/screenshots/setup.png) |
 
 <br>
 
-### HTML Semantic Backbone
-*Container hierarchy and accessible SPA view skeleton.*
+### HTML Semantic Backbone & View Flow
+*Container hierarchy, semantic landmarks, and client-side SPA routing skeleton.*
 
-![HTML Backbone Diagram](assets/screenshots/html-backbone.png)
+![HTML Semantic Backbone](assets/screenshots/html-backbone.png)
 
 </div>
 
 ---
 
-## 📌 1. Overview & Project Purpose
+## 📋 Project Planning & Workflow Worksheet
 
-Most to-do lists fail because they demand constant manual rescheduling: everyday routines get lost in transient lists, leading to task fatigue and fragmented tracking. 
+This application was developed progressively following structured sprint planning and technical constraints. For comprehensive documentation regarding webpage structures, feature priority matrices, interaction mappings, implementation dependencies, and development reflections, please refer to the complete planning worksheet:
 
-**sirTrax** eliminates this friction with a browser-native **Weekly Cadence Engine**. Rather than treating every day as a blank slate, routines repeat across a consistent Monday–Sunday cycle, automatically refreshing when calendar dates roll over. All activities are organized strictly into three foundational life pillars—**Work**, **School**, and **Health**—enabling balanced daily focus without clutter[cite: 1, 3].
-
-### Project Goals
-* **Strict Vanilla Web Standards:** Handcrafted entirely with pure HTML5, CSS3, and JavaScript—strictly zero external libraries, frameworks, or runtime dependencies.
-* **Determinism & Persistence:** Real-time state synchronization to browser `localStorage` ensuring zero data loss across reloads.
-* **Accessible Material You Aesthetic:** Deep dark-mode elevation surfaces, tonal pill accents, and full WAI-ARIA compliance designed for fluid user interaction[cite: 1, 3].
+📄 **[View Full Application Development Workflow Worksheet](docs/MO-IT161_Application_Development_Workflow_Worksheet_H2101_CUIZON_MD.xlsx)** *(or open the `.xlsx` file located in the root repository)*
 
 ---
 
-## 🚀 2. Core Architecture
+## 📌 1. Project Purpose & Overview
 
-sirTrax operates as a high-performance, single-file client-side Single-Page Application (SPA) driven by an encapsulated Immediately Invoked Function Expression (IIFE):
+**sirTrax** was born out of a real-world struggle with **app fatigue**—constantly juggling multiple note-taking tools, fragmented reminder systems, and complex project managers just to maintain daily focus. When tools demand too much manual overhead to jot down and categorize items, the friction inevitably leads to procrastination.
 
-```text
-[ Browser Date Check ] ────► [ Cadence State Engine ] ────► [ Dynamic DOM Renderer ]
-           │                            │                               │
-     Auto-Rollover             Local Storage Sync            Filtered View Update
-   (Resets repeating             (sirTrax_cadence)          (Work / School / Health)
-     weekly tasks)
+**sirTrax** solves this by establishing a structured, automated weekly loop. Rather than treating each morning as an empty, intimidating backlog, routines are defined once per day of the week and automated across three essential life pillars:
+* **💼 Work:** Sprint commitments, engineering reviews, pull requests, and retrospectives.
+* **🎓 School:** Coursework deliverables, lecture notes review, lab submissions, and study blocks.
+* **🏃 Health:** Hydration, daily workouts, outdoor walks, meal prep, and recovery routines.
+
+### Key Architectural Capabilities
+* **Zero-Reload SPA Navigation:** Instant client-side view switching between Welcome (`#view-welcome`), Weekly Setup (`#view-setup`), and Daily Dashboard (`#view-dashboard`).
+* **Weekly Cadence Looping Engine:** Automatically detects calendar date rollovers via system time, refreshing repeating weekly tasks to uncompleted for the new cycle.
+* **Persistent Local Storage:** Client-side CRUD operations and state preservation using `localStorage` without requiring an external backend database.
+* **Accessible Material You Aesthetic:** Dark-mode elevation surfaces, pill chips, and custom CSS variables modeled around Android's Material 3 design philosophy.
+
+---
+
+## ✨ 2. Application Features & Interaction Areas
+
+| Component / Interaction Area | Purpose & Functionality | Priority |
+| :--- | :--- | :---: |
+| **Weekly Cadence Engine** | Maps routines to specific weekdays (Monday–Sunday) and auto-resets completed recurring tasks upon calendar rollover. | **High** |
+| **Client-Side SPA Routing** | Class-based view toggling (`.active` / `.hidden`) that switches views smoothly without full browser reloads. | **High** |
+| **LocalStorage State Core** | Serializes application state (`state.cadence`) to browser storage, persisting user data across refreshes. | **High** |
+| **Pillar Filters ("All", "Work", "School", "Health")** | Real-time memory filtering on the dashboard to view tasks by specific domains with live count badges. | **Medium** |
+| **Interactive Progress Bar** | Dynamic circular checkboxes that visually strike through tasks and instantly update completion metrics. | **Medium** |
+| **Dual Modal Task Capture** | Dedicated dialog modals for scheduling recurring weekly habits or injecting quick, one-off tasks into today. | **Medium** |
+| **Toast Feedback & Security** | Accessible floating toast notifications for user actions and HTML entity sanitization (`escapeHTML`) against XSS. | **Medium** |
+
+---
+
+## 🤖 3. AI Usage & Human Verification Statement
+
+In alignment with MMDC academic integrity guidelines and the course **AI Use Statement (Level 3/4 Output)**, artificial intelligence tools were leveraged as interactive thought partners, prototyping aids, and syntax benchmarks rather than blind code generators[cite: 8].
+
+### AI Tools Utilized
+* **Google Stitch:** Rapid prototyping and visual layout translation from Figma sketches[cite: 8].
+* **Gemini 3.8 Flash & Gemini 3.1 Pro:** Brainstorming architecture, engineering Stitch prompt descriptions, and organizing workflow documentation[cite: 8].
+* **Ollama (Local Models — `qwen3-coder:30b`, `gemma4:e4b`):** Used strictly for comparative analysis to benchmark how the project would look without strict coursework constraints (none of this generated code was incorporated into the final build)[cite: 8].
+
+### Human Oversight, Code Review & Manual Execution
+1. **Manual Transcription for Syntax Familiarity:** While AI tools generated alternative code snippets and structural examples, all code was manually typed line-by-line into the code editor[cite: 8]. This intentional practice ensured full comprehension of script execution flow, DOM manipulation, and CSS variable inheritance[cite: 8].
+2. **Defensive Audit Against Hallucinations:** AI outputs frequently introduced hallucinated CSS classes, broken element references, and duplicate UI elements (such as pairing SVG icons with redundant literal `+` text symbols). Every component was manually audited and adjusted.
+3. **Accessibility (WAI-ARIA) Remediation:** Automated AI suggestions frequently failed accessibility validation. The HTML and JavaScript were audited by hand to implement correct `role="dialog"`, `role="tablist"`, `role="radiogroup"`, `aria-modal="true"`, `aria-checked`, and `aria-live` announcements to ensure full usability compliance[cite: 8].
+4. **Scope Control:** Initial ideas for speech-to-text integration (via Web Speech API) and local LLM auto-categorization were deliberately set aside to focus strictly on delivering a clean, maintainable, pure HTML5/CSS3/JavaScript codebase within the milestone timeline[cite: 8].
+
+---
+
+## 🚀 Getting Started
+
+### Local Setup
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/](https://github.com/)<your-username>/sirTrax.git
