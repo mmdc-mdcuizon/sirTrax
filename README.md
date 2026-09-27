@@ -14,9 +14,9 @@ A clean, browser-based weekly planner designed to build daily habits and avoid a
 ### 🎓 Academic Context
 **Institution:** Mapúa Malayan Digital College (MMDC)  
 **Program:** Bachelor of Science in Information Technology (Major in Software Development)  
-**Course / Section:** Web Systems and Technology (MO-IT161) — H3101[cite: 5]  
-**Deliverable:** Milestone 1: Interactive Frontend Web Application[cite: 5]  
-**Author:** Marc Denise Cuizon[cite: 5]  
+**Course / Section:** Web Systems and Technology (MO-IT161) — H3101
+**Deliverable:** Milestone 1: Interactive Frontend Web Application
+**Author:** Marc Denise Cuizon
 
 ---
 
@@ -97,18 +97,18 @@ Everything is sorted into three main areas of life:
 
 ## 🤖 3. AI Usage & Learning Reflection
 
-In compliance with our course **AI Use Statement** policy, I used AI tools as a learning partner, sounding board, and prototyping assistant rather than letting them write the project for me[cite: 5].
+In compliance with our course **AI Use Statement** policy, I used AI tools as a learning partner, sounding board, and prototyping assistant rather than letting them write the project for me.
 
 ### Tools Used
-- **Google Stitch:** Prototyped visual mockups based on rough layout sketches[cite: 5].
-- **Gemini (Flash & Pro):** Brainstormed how to build my idea under strict HTML/CSS/JavaScript constraints, helped refine prompt descriptions for Google Stitch, and helped me organize my thoughts for the worksheet documentation[cite: 5].
-- **Ollama (Local models — `qwen3-coder:30b`, `gemma4:e4b`):** Generated unconstrained reference code to compare against my ongoing projects and see how things look without coursework limitations (none of this code was used in the final submission)[cite: 5].
+- **Google Stitch:** Prototyped visual mockups based on rough layout sketches.
+- **Gemini (Flash & Pro):** Brainstormed how to build my idea under strict HTML/CSS/JavaScript constraints, helped refine prompt descriptions for Google Stitch, and helped me organize my thoughts for the worksheet documentation.
+- **Ollama (Local models — `qwen3-coder:30b`, `gemma4:e4b`):** Generated unconstrained reference code to compare against my ongoing projects and see how things look without coursework limitations (none of this code was used in the final submission).
 
 ### How I Exercised Judgment & Built It Manually
-1. **Typing Every Line by Hand:** Even when AI suggested code snippets or solutions, I typed all the code into VS Code manually[cite: 5]. Doing this line-by-line was crucial for me as a student to actually understand the syntax, DOM manipulation, and overall structure of the app[cite: 5].
-2. **Fixing AI Mistakes & Hallucinations:** AI outputs often mess up small details—like generating broken class names, hallucinating non-existent properties, or duplicating button icons and plus signs (`+ + Quick Add`). I had to audit every line and correct these mistakes by hand[cite: 5].
-3. **Accessibility (ARIA) Corrections:** When I prompted AI for screen-reader accessibility, it often produced incomplete or improper tags. I manually reviewed and set proper ARIA dialog roles, radio groups, tabs, and live announcements so the app genuinely meets accessibility standards[cite: 5].
-4. **Keeping Scope Realistic:** My original dream idea was a voice-to-text task creator that used AI to automatically sort reminders into categories[cite: 5]. Recognizing that audio streaming and natural language processing were way too complicated for Milestone 1, I cut those out to focus on delivering a clean, solid, working web application first[cite: 5].
+1. **Typing Every Line by Hand:** Even when AI suggested code snippets or solutions, I typed all the code into VS Code manually. Doing this line-by-line was crucial for me as a student to actually understand the syntax, DOM manipulation, and overall structure of the app.
+2. **Fixing AI Mistakes & Hallucinations:** AI outputs often mess up small details—like generating broken class names, hallucinating non-existent properties, or duplicating button icons and plus signs (`+ + Quick Add`). I had to audit every line and correct these mistakes by hand.
+3. **Accessibility (ARIA) Corrections:** When I prompted AI for screen-reader accessibility, it often produced incomplete or improper tags. I manually reviewed and set proper ARIA dialog roles, radio groups, tabs, and live announcements so the app genuinely meets accessibility standards.
+4. **Keeping Scope Realistic:** My original dream idea was a voice-to-text task creator that used AI to automatically sort reminders into categories. Recognizing that audio streaming and natural language processing were way too complicated for Milestone 1, I cut those out to focus on delivering a clean, solid, working web application first.
 
 📄 <strong><a href="https://docs.google.com/document/d/1Fhx7qHvvBqz0MmN6DRmlRb6HSddC1NUR1OYq3cHr0Sg/edit?usp=drive_link" target="_blank" rel="noopener noreferrer">View Full AI Use Statement Document</a></strong>
 
