@@ -3,7 +3,7 @@
 # ⚡ sirTrax
 ### Weekly Cadence & Daily Focus Planner
 
-An opinionated, browser-based weekly cadence planner designed to build consistency and eliminate app fatigue through automated recurring routines across **Work**, **School**, and **Health**.
+A clean, browser-based weekly planner designed to build daily habits and avoid app overload by organizing recurring routines across **Work**, **School**, and **Health**.
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](#)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](#)
@@ -14,20 +14,30 @@ An opinionated, browser-based weekly cadence planner designed to build consisten
 ### 🎓 Academic Context
 **Institution:** Mapúa Malayan Digital College (MMDC)  
 **Program:** Bachelor of Science in Information Technology (Major in Software Development)  
-**Course / Section:** Web Systems and Technology (MO-IT161) — H3101  
-**Deliverable:** Milestone 1: Interactive Frontend Web Application  
-**Author:** Marc Denise Cuizon  
+**Course / Section:** Web Systems and Technology (MO-IT161) — H3101[cite: 5]  
+**Deliverable:** Milestone 1: Interactive Frontend Web Application[cite: 5]  
+**Author:** Marc Denise Cuizon[cite: 5]  
 
 ---
 
 </div>
 
-## 📸 Interface Previews & Structure Backbone
+## 📑 Table of Contents
+- [📸 Screenshots & Structure](#-screenshots--structure)
+- [📋 Project Planning & Worksheet](#-project-planning--worksheet)
+- [📌 1. Project Purpose & Overview](#-1-project-purpose--overview)
+- [✨ 2. Features & Interaction Areas](#-2-features--interaction-areas)
+- [🤖 3. AI Usage & Learning Reflection](#-3-ai-usage--learning-reflection)
+- [🚀 4. How to Run Locally](#-4-how-to-run-locally)
+
+---
+
+## 📸 Screenshots & Structure
 
 <div align="center">
 
 ### Application Views
-*Material You dark interface featuring live execution progress tracking, weekday habit scheduling, and pillar filtering.*
+*Dark theme interface inspired by Material You, with progress tracking, day scheduling, and category filters.*
 
 | Daily Execution Dashboard | Weekly Cadence Planner |
 | :---: | :---: |
@@ -35,8 +45,8 @@ An opinionated, browser-based weekly cadence planner designed to build consisten
 
 <br>
 
-### HTML Semantic Backbone & View Flow
-*Container hierarchy, semantic landmarks, and client-side SPA routing skeleton.*
+### HTML Structure & Page Flow
+*Overall layout blueprint showing how views switch without refreshing the page.*
 
 ![HTML Semantic Backbone](assets/screenshots/html-backbone.png)
 
@@ -44,9 +54,9 @@ An opinionated, browser-based weekly cadence planner designed to build consisten
 
 ---
 
-## 📋 Project Planning & Workflow Worksheet
+## 📋 Project Planning & Worksheet
 
-This application was developed progressively following structured sprint planning and technical constraints. For comprehensive documentation regarding webpage structures, feature priority matrices, interaction mappings, implementation dependencies, and development reflections, please refer to the complete planning worksheet:
+This project was built step by step following our course weekly requirements. For details on how I planned the pages, ordered the features, managed project scope, and reflected on my coding workflow, here is the full planning worksheet:
 
 📄 <strong><a href="https://docs.google.com/spreadsheets/d/1sG5ybAjzruohheh9A48HBCbZCPGFaekcK2JMmOz7NbI/edit?usp=drive_link" target="_blank" rel="noopener noreferrer">View Full Application Development Workflow Worksheet</a></strong>
 
@@ -54,55 +64,59 @@ This application was developed progressively following structured sprint plannin
 
 ## 📌 1. Project Purpose & Overview
 
-**sirTrax** was born out of a real-world struggle with **app fatigue**—constantly juggling multiple note-taking tools, fragmented reminder systems, and complex project managers just to maintain daily focus. When tools demand too much manual overhead to jot down and categorize items, the friction inevitably leads to procrastination.
+I decided to build **sirTrax** because of a struggle I deal with daily: **app fatigue**. I found myself jumping between to-do apps, notes, and chat reminders, and the friction of manually typing out and sorting tasks every morning made me put things off.
 
-**sirTrax** solves this by establishing a structured, automated weekly loop. Rather than treating each morning as an empty, intimidating backlog, routines are defined once per day of the week and automated across three essential life pillars:
-* **💼 Work:** Sprint commitments, engineering reviews, pull requests, and retrospectives.
-* **🎓 School:** Coursework deliverables, lecture notes review, lab submissions, and study blocks.
-* **🏃 Health:** Hydration, daily workouts, outdoor walks, meal prep, and recovery routines.
+Instead of starting with a blank checklist every single day, **sirTrax** uses a weekly loop. You set up recurring routines once for any day of the week, and the app resets them automatically when the calendar date changes.
 
-### Key Architectural Capabilities
-* **Zero-Reload SPA Navigation:** Instant client-side view switching between Welcome (`#view-welcome`), Weekly Setup (`#view-setup`), and Daily Dashboard (`#view-dashboard`).
-* **Weekly Cadence Looping Engine:** Automatically detects calendar date rollovers via system time, refreshing repeating weekly tasks to uncompleted for the new cycle.
-* **Persistent Local Storage:** Client-side CRUD operations and state preservation using `localStorage` without requiring an external backend database.
-* **Accessible Material You Aesthetic:** Dark-mode elevation surfaces, pill chips, and custom CSS variables modeled around Android's Material 3 design philosophy.
+Everything is sorted into three main areas of life:
+- **💼 Work:** Job tasks, code reviews, and meetings.
+- **🎓 School:** Assignments, checking lecture notes, and study blocks.
+- **🏃 Health:** Hydration, exercise, walks, and rest.
+
+### How the Web App Works (Without Extra Libraries)
+- **No Page Refreshes (Single-Page App):** The app switches smoothly between the Welcome screen, the Weekly Planner, and the Daily Dashboard using plain JavaScript class toggles (`.active` and `.hidden`), so the page never has to reload.
+- **Automatic Weekly Resets:** It checks the computer's system date when opened. If it is a new day, repeating weekly routines are unchecked so you can start fresh.
+- **Saves in the Browser (`localStorage`):** Everything you add or check off is saved directly in your browser's storage, meaning tasks stay intact even if you close or refresh the tab.
+- **Material You Design:** Built using CSS variables and dark elevation layers to give it an Android Material-inspired look and feel.
 
 ---
 
-## ✨ 2. Application Features & Interaction Areas
+## ✨ 2. Features & Interaction Areas
 
-| Component / Interaction Area | Purpose & Functionality | Priority |
+| Feature / Screen Area | What It Does | Priority |
 | :--- | :--- | :---: |
-| **Weekly Cadence Engine** | Maps routines to specific weekdays (Monday–Sunday) and auto-resets completed recurring tasks upon calendar rollover. | **High** |
-| **Client-Side SPA Routing** | Class-based view toggling (`.active` / `.hidden`) that switches views smoothly without full browser reloads. | **High** |
-| **LocalStorage State Core** | Serializes application state (`state.cadence`) to browser storage, persisting user data across refreshes. | **High** |
-| **Pillar Filters ("All", "Work", "School", "Health")** | Real-time memory filtering on the dashboard to view tasks by specific domains with live count badges. | **Medium** |
-| **Interactive Progress Bar** | Dynamic circular checkboxes that visually strike through tasks and instantly update completion metrics. | **Medium** |
-| **Dual Modal Task Capture** | Dedicated dialog modals for scheduling recurring weekly habits or injecting quick, one-off tasks into today. | **Medium** |
-| **Toast Feedback & Security** | Accessible floating toast notifications for user actions and HTML entity sanitization (`escapeHTML`) against XSS. | **Medium** |
+| **Weekly Loop Engine** | Schedules tasks from Monday to Sunday and automatically unchecks repeating tasks when the day rolls over. | **High** |
+| **View Switching** | Switches between the Welcome screen, Setup screen, and Today's Dashboard without browser reloads. | **High** |
+| **Browser Storage (`localStorage`)** | Saves your customized routines and checkboxes in the browser without needing a backend database yet. | **High** |
+| **Category Filters ("All", "Work", "School", "Health")** | Lets you filter today's view by category with live count badges for each pillar. | **Medium** |
+| **Interactive Progress Bar** | Circular check buttons that cross out finished tasks and fill up the progress bar in real time. | **Medium** |
+| **Two Ways to Add Tasks** | Use the **Weekly Setup Modal** for routines that repeat every week, or **Quick Add** for a one-off task for today only. | **Medium** |
+| **Toast Alerts & Input Safety** | Shows pop-up notices when tasks are completed or deleted, and cleans input text so harmful code cannot be run. | **Medium** |
 
 ---
 
-## 🤖 3. AI Usage & Human Verification Statement
+## 🤖 3. AI Usage & Learning Reflection
 
-In alignment with MMDC academic integrity guidelines and the course **AI Use Statement (Level 3/4 Output)**, artificial intelligence tools were leveraged as interactive thought partners, prototyping aids, and syntax benchmarks rather than blind code generators[cite: 8].
+In compliance with our course **AI Use Statement** policy, I used AI tools as a learning partner, sounding board, and prototyping assistant rather than letting them write the project for me[cite: 5].
 
-### AI Tools Utilized
-* **Google Stitch:** Rapid prototyping and visual layout translation from Figma sketches[cite: 8].
-* **Gemini 3.8 Flash & Gemini 3.1 Pro:** Brainstorming architecture, engineering Stitch prompt descriptions, and organizing workflow documentation[cite: 8].
-* **Ollama (Local Models — `qwen3-coder:30b`, `gemma4:e4b`):** Used strictly for comparative analysis to benchmark how the project would look without strict coursework constraints (none of this generated code was incorporated into the final build)[cite: 8].
+### Tools Used
+- **Google Stitch:** Prototyped visual mockups based on rough layout sketches[cite: 5].
+- **Gemini (Flash & Pro):** Brainstormed how to build my idea under strict HTML/CSS/JavaScript constraints, helped refine prompt descriptions for Google Stitch, and helped me organize my thoughts for the worksheet documentation[cite: 5].
+- **Ollama (Local models — `qwen3-coder:30b`, `gemma4:e4b`):** Generated unconstrained reference code to compare against my ongoing projects and see how things look without coursework limitations (none of this code was used in the final submission)[cite: 5].
 
-### Human Oversight, Code Review & Manual Execution
-1. **Manual Transcription for Syntax Familiarity:** While AI tools generated alternative code snippets and structural examples, all code was manually typed line-by-line into the code editor[cite: 8]. This intentional practice ensured full comprehension of script execution flow, DOM manipulation, and CSS variable inheritance[cite: 8].
-2. **Defensive Audit Against Hallucinations:** AI outputs frequently introduced hallucinated CSS classes, broken element references, and duplicate UI elements (such as pairing SVG icons with redundant literal `+` text symbols). Every component was manually audited and adjusted.
-3. **Accessibility (WAI-ARIA) Remediation:** Automated AI suggestions frequently failed accessibility validation. The HTML and JavaScript were audited by hand to implement correct `role="dialog"`, `role="tablist"`, `role="radiogroup"`, `aria-modal="true"`, `aria-checked`, and `aria-live` announcements to ensure full usability compliance[cite: 8].
-4. **Scope Control:** Initial ideas for speech-to-text integration (via Web Speech API) and local LLM auto-categorization were deliberately set aside to focus strictly on delivering a clean, maintainable, pure HTML5/CSS3/JavaScript codebase within the milestone timeline[cite: 8].
+### How I Exercised Judgment & Built It Manually
+1. **Typing Every Line by Hand:** Even when AI suggested code snippets or solutions, I typed all the code into VS Code manually[cite: 5]. Doing this line-by-line was crucial for me as a student to actually understand the syntax, DOM manipulation, and overall structure of the app[cite: 5].
+2. **Fixing AI Mistakes & Hallucinations:** AI outputs often mess up small details—like generating broken class names, hallucinating non-existent properties, or duplicating button icons and plus signs (`+ + Quick Add`). I had to audit every line and correct these mistakes by hand[cite: 5].
+3. **Accessibility (ARIA) Corrections:** When I prompted AI for screen-reader accessibility, it often produced incomplete or improper tags. I manually reviewed and set proper ARIA dialog roles, radio groups, tabs, and live announcements so the app genuinely meets accessibility standards[cite: 5].
+4. **Keeping Scope Realistic:** My original dream idea was a voice-to-text task creator that used AI to automatically sort reminders into categories[cite: 5]. Recognizing that audio streaming and natural language processing were way too complicated for Milestone 1, I cut those out to focus on delivering a clean, solid, working web application first[cite: 5].
+
+📄 <strong><a href="https://docs.google.com/document/d/1Fhx7qHvvBqz0MmN6DRmlRb6HSddC1NUR1OYq3cHr0Sg/edit?usp=drive_link" target="_blank" rel="noopener noreferrer">View Full AI Use Statement Document</a></strong>
 
 ---
 
-## 🚀 Getting Started
+## 🚀 4. How to Run Locally
 
-### Local Setup
-1. Clone the repository:
+### Setup Steps
+1. Clone this repository:
    ```bash
    git clone [https://github.com/](https://github.com/)<your-username>/sirTrax.git
