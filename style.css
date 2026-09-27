@@ -1,0 +1,1426 @@
+
+:root {
+  /* Surfaces & Backgrounds */
+  --bg-app: #0f1115;
+  --surface-container-low: #14171e;
+  --surface-container: #1a1c23;
+  --surface-container-high: #242731;
+  --surface-container-highest: #2d313e;
+  --surface-card: #1c1f28;
+  --surface-card-border: rgba(255, 255, 255, 0.08);
+
+  /* Typography Colors */
+  --text-main: #f1f3f7;
+  --text-muted: #9aa0a6;
+  --text-dim: #646b79;
+
+  /* Material You Primary / Accent Tokens */
+  --md-primary: #8ab4f8;
+  --md-primary-container: rgba(138, 180, 248, 0.18);
+  --md-on-primary: #041e42;
+  --md-primary-glow: rgba(138, 180, 248, 0.35);
+
+  /* Pillar Tokens (Work, School, Health) */
+  --pillar-work-bg: rgba(59, 130, 246, 0.15);
+  --pillar-work-color: #60a5fa;
+  --pillar-work-border: 1px solid rgba(59, 130, 246, 0.3);
+  --pillar-work-glow: rgba(59, 130, 246, 0.25);
+
+  --pillar-school-bg: rgba(245, 158, 11, 0.15);
+  --pillar-school-color: #fbbf24;
+  --pillar-school-border: 1px solid rgba(245, 158, 11, 0.3);
+  --pillar-school-glow: rgba(245, 158, 11, 0.25);
+
+  --pillar-health-bg: rgba(16, 185, 129, 0.15);
+  --pillar-health-color: #34d399;
+  --pillar-health-border: 1px solid rgba(16, 185, 129, 0.3);
+  --pillar-health-glow: rgba(16, 185, 129, 0.25);
+
+  /* Feedback Colors */
+  --color-danger: #f87171;
+  --color-danger-bg: rgba(239, 68, 68, 0.12);
+  --color-danger-border: rgba(239, 68, 68, 0.25);
+
+  /* Elevation Shadows */
+  --shadow-elevation-1: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-elevation-2: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow-elevation-3: 0 20px 48px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+
+  /* Radius & Curves */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  /* Font Families */
+  --font-logo: 'Faster One', cursive, system-ui;
+  --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Motion Timing */
+  --transition-fast: 0.18s cubic-bezier(0.2, 0, 0, 1);
+  --transition-normal: 0.28s cubic-bezier(0.2, 0, 0, 1);
+  --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- Base & Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* --- Ambient Background Glows --- */
+.bg-glow {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(120px);
+  z-index: 0;
+  opacity: 0.4;
+  animation: glowFloat 18s ease-in-out infinite alternate;
+}
+
+.bg-glow-1 {
+  top: -10%;
+  left: 20%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.28), transparent 70%);
+}
+
+.bg-glow-2 {
+  bottom: -10%;
+  right: 15%;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.22), transparent 70%);
+}
+
+@keyframes glowFloat {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(30px) scale(1.08); }
+}
+
+/* --- Layout Wrapper --- */
+.app-root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+/* --- Single Page View Transition Handling --- */
+.view-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.view-container.hidden {
+  display: none !important;
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+}
+
+.view-container.active {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+  animation: viewFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes viewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --- Brand Typography --- */
+.brand-logo {
+  font-family: var(--font-logo);
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-transform: none;
+  line-height: 1;
+  text-shadow: 0 4px 20px rgba(138, 180, 248, 0.4);
+}
+
+.brand-logo-sm {
+  font-size: 28px;
+}
+
+.brand-logo-xs {
+  font-size: 22px;
+  color: var(--md-primary);
+}
+
+/* --- General Surface Cards --- */
+.card {
+  background: var(--surface-container);
+  border: 1px solid var(--surface-card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-elevation-3);
+  backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Buttons & Interactive Elements --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all var(--transition-fast);
+  user-select: none;
+  text-decoration: none;
+}
+
+/* Icon image helper inside buttons, chips, and toggles */
+.btn img, .pillar-chip img, .category-toggle-chip img {
+  display: inline-block;
+  vertical-align: middle;
+  pointer-events: none;
+  user-select: none;
+}
+
+.btn-pill {
+  border-radius: var(--radius-pill);
+  padding: 10px 22px;
+}
+
+.btn-primary {
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(138, 180, 248, 0.25);
+}
+
+.btn-primary:hover {
+  background: #a8c7fa;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(138, 180, 248, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  background: #7ca5ea;
+}
+
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: rotate(30deg);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.btn-glow:hover::after {
+  opacity: 1;
+  animation: shineSweep 1.2s ease forwards;
+}
+
+@keyframes shineSweep {
+  0% { transform: translate(-80%, -80%) rotate(30deg); }
+  100% { transform: translate(80%, 80%) rotate(30deg); }
+}
+
+.btn-secondary {
+  background: var(--surface-container-high);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-container-highest);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-square {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  padding: 0;
+}
+
+/* ==========================================================================
+   VIEW 1: WELCOME / SPLASH SCREEN
+   ========================================================================== */
+.welcome-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 56px 44px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-container-high);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #34d399;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #34d399;
+  animation: pulseAnim 2s infinite;
+}
+
+@keyframes pulseAnim {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.8; }
+}
+
+.welcome-header .brand-logo {
+  font-size: 58px;
+  margin-bottom: 8px;
+}
+
+.welcome-subtitle {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: -0.3px;
+}
+
+.welcome-description {
+  color: var(--text-muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+  max-width: 440px;
+}
+
+/* Pillar Preview Chips */
+.pillar-showcase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 6px 0 12px 0;
+}
+
+.pillar-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pillar-chip:hover {
+  transform: translateY(-2px);
+}
+
+.pillar-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.chip-work {
+  background: var(--pillar-work-bg);
+  color: var(--pillar-work-color);
+  border: var(--pillar-work-border);
+}
+.chip-work:hover {
+  box-shadow: 0 4px 14px var(--pillar-work-glow);
+}
+.chip-work img, .category-toggle-chip.chip-work img {
+  filter: invert(56%) sepia(85%) saturate(1210%) hue-rotate(193deg) brightness(102%) contrast(97%);
+}
+
+.chip-school {
+  background: var(--pillar-school-bg);
+  color: var(--pillar-school-color);
+  border: var(--pillar-school-border);
+}
+.chip-school:hover {
+  box-shadow: 0 4px 14px var(--pillar-school-glow);
+}
+.chip-school img, .category-toggle-chip.chip-school img {
+  filter: invert(77%) sepia(55%) saturate(1518%) hue-rotate(352deg) brightness(101%) contrast(98%);
+}
+
+.chip-health {
+  background: var(--pillar-health-bg);
+  color: var(--pillar-health-color);
+  border: var(--pillar-health-border);
+}
+.chip-health:hover {
+  box-shadow: 0 4px 14px var(--pillar-health-glow);
+}
+.chip-health img, .category-toggle-chip.chip-health img {
+  filter: invert(72%) sepia(50%) saturate(738%) hue-rotate(111deg) brightness(97%) contrast(93%);
+}
+
+.welcome-actions {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.welcome-actions .btn-primary {
+  width: 100%;
+  max-width: 260px;
+  padding: 14px 28px;
+  font-size: 16px;
+}
+
+/* ==========================================================================
+   VIEW 2: WEEKLY CADENCE SETUP / PLANNER
+   ========================================================================== */
+.setup-card {
+  width: 100%;
+  max-width: 1060px;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+}
+
+.planner-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--surface-card-border);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.planner-branding {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.planner-title-group .card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.planner-title-group .card-subtitle {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* Planner Body (2 Columns) */
+.planner-body {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  flex: 1;
+}
+
+/* Left Column: Days Sidebar */
+.planner-days-sidebar {
+  background: rgba(0, 0, 0, 0.2);
+  border-right: 1px solid var(--surface-card-border);
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-heading {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  font-weight: 700;
+  padding-left: 10px;
+}
+
+.day-pills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.day-pill-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.day-pill-btn:hover {
+  background: var(--surface-container-high);
+  color: var(--text-main);
+}
+
+.day-pill-btn.active {
+  background: var(--md-primary-container);
+  color: var(--md-primary);
+  border-color: rgba(138, 180, 248, 0.4);
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(138, 180, 248, 0.15);
+}
+
+.day-count-badge {
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--surface-container-highest);
+  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-fast);
+}
+
+.day-pill-btn.active .day-count-badge {
+  background: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+/* Right Column: Scheduled Cadence List */
+.planner-main-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 32px;
+  background: var(--surface-container);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.panel-day-heading h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.panel-day-caption {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.routines-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  max-height: 380px;
+  padding-right: 6px;
+}
+
+/* Custom Scrollbar */
+.routines-list::-webkit-scrollbar,
+.tasks-list::-webkit-scrollbar {
+  width: 6px;
+}
+.routines-list::-webkit-scrollbar-track,
+.tasks-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+.routines-list::-webkit-scrollbar-thumb,
+.tasks-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+.routines-list::-webkit-scrollbar-thumb:hover,
+.tasks-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Scheduled Cadence Card Item */
+.routine-row-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-container-high);
+  border: 1px solid var(--surface-card-border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  gap: 16px;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.routine-row-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: var(--surface-container-highest);
+  transform: translateX(2px);
+}
+
+.routine-item-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.routine-title-text {
+  font-size: 14.5px;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.routine-item-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Delete Action Button */
+.btn-action-delete {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-xs);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.btn-action-delete img {
+  display: block;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: filter var(--transition-fast), opacity var(--transition-fast);
+}
+
+.btn-action-delete:hover {
+  background: var(--color-danger-bg);
+}
+
+.btn-action-delete:hover img {
+  opacity: 1;
+  filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(330deg) brightness(101%) contrast(97%);
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  color: var(--text-dim);
+  text-align: center;
+  gap: 12px;
+}
+
+.empty-state-icon {
+  width: 48px;
+  height: 48px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.empty-state-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.empty-state-desc {
+  font-size: 13px;
+  max-width: 280px;
+}
+
+/* Bottom Input / Trigger Area */
+.setup-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--surface-card-border);
+}
+
+.input-field-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-field-wrapper .input-icon {
+  position: absolute;
+  left: 16px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.text-input {
+  width: 100%;
+  background: var(--surface-container-high);
+  border: 1px solid var(--surface-card-border);
+  border-radius: var(--radius-pill);
+  padding: 12px 18px 12px 42px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-main);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.text-input::placeholder {
+  color: var(--text-dim);
+}
+
+.text-input:focus {
+  border-color: var(--md-primary);
+  background: var(--surface-container-highest);
+  box-shadow: 0 0 0 3px rgba(138, 180, 248, 0.2);
+}
+
+/* ==========================================================================
+   VIEW 3: DAILY EXECUTION DASHBOARD
+   ========================================================================== */
+.dashboard-card {
+  width: 100%;
+  max-width: 760px;
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Header Bar */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.current-day-headline {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+.current-date-subline {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Progress Metrics Bar */
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--surface-card-border);
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.progress-title {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.progress-stats {
+  font-weight: 600;
+  color: var(--md-primary);
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background: var(--surface-container-highest);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #60a5fa, #34d399);
+  border-radius: var(--radius-pill);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Pillar Filter Bar */
+.filter-pill-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-container-high);
+  color: var(--text-muted);
+  border: 1px solid var(--surface-card-border);
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.filter-pill:hover {
+  background: var(--surface-container-highest);
+  color: var(--text-main);
+}
+
+.filter-pill.active {
+  background: #ffffff;
+  color: #0f1115;
+  font-weight: 600;
+  border-color: #ffffff;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
+}
+
+.filter-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot-work { background-color: var(--pillar-work-color); }
+.dot-school { background-color: var(--pillar-school-color); }
+.dot-health { background-color: var(--pillar-health-color); }
+
+.filter-badge {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.25);
+  color: inherit;
+}
+
+.filter-pill.active .filter-badge {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Main Tasks Container */
+.dashboard-tasks-card {
+  background: var(--surface-container-low);
+  border: 1px solid var(--surface-card-border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  min-height: 280px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Task Item Card */
+.task-row-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-container);
+  border: 1px solid var(--surface-card-border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  gap: 16px;
+  transition: all var(--transition-fast);
+}
+
+.task-row-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.task-item-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Custom Circular Checkbox with External SVG Icon */
+.custom-checkbox-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--text-dim);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.custom-checkbox-btn:hover {
+  border-color: var(--md-primary);
+  background: rgba(138, 180, 248, 0.1);
+}
+
+.custom-checkbox-btn img {
+  display: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Checkbox preview disabled in Setup */
+.custom-checkbox-btn.preview-only {
+  opacity: 0.45;
+  cursor: default;
+}
+.custom-checkbox-btn.preview-only:hover {
+  border-color: var(--text-dim);
+  background: transparent;
+}
+
+/* Completed Task State */
+.task-row-card.completed {
+  background: rgba(26, 28, 35, 0.6);
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.task-row-card.completed .custom-checkbox-btn {
+  background: #34d399;
+  border-color: #34d399;
+}
+
+.task-row-card.completed .custom-checkbox-btn img {
+  display: block;
+  filter: brightness(0);
+}
+
+.task-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-main);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-row-card.completed .task-title {
+  text-decoration: line-through;
+  color: var(--text-dim);
+}
+
+.task-item-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Category Badge (work, school, health) */
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+}
+
+.badge-work {
+  background: var(--pillar-work-bg);
+  color: var(--pillar-work-color);
+  border: var(--pillar-work-border);
+}
+
+.badge-school {
+  background: var(--pillar-school-bg);
+  color: var(--pillar-school-color);
+  border: var(--pillar-school-border);
+}
+
+.badge-health {
+  background: var(--pillar-health-bg);
+  color: var(--pillar-health-color);
+  border: var(--pillar-health-border);
+}
+
+/* Footer Actions */
+.dashboard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--surface-card-border);
+}
+
+/* ==========================================================================
+   MODAL DIALOGS (Setup & Quick Add)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  transition: opacity var(--transition-fast);
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  z-index: 1;
+}
+
+.modal-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 480px;
+  background: var(--surface-container-high);
+  border: 1px solid var(--surface-card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-elevation-3);
+  padding: 28px 30px;
+  animation: modalSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.modal-title {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.btn-icon-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.btn-icon-close img {
+  display: block;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.btn-icon-close:hover {
+  background: var(--surface-container-highest);
+}
+
+.btn-icon-close:hover img {
+  opacity: 1;
+}
+
+/* Modal Form Controls */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.modal-input {
+  padding-left: 18px;
+  border-radius: var(--radius-md);
+  font-size: 14.5px;
+}
+
+/* Category Toggle Chips */
+.category-toggle-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.category-toggle-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  opacity: 0.55;
+  filter: grayscale(40%);
+}
+
+.category-toggle-chip.selected {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: scale(1.02);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* Toggle Switch Row */
+.toggle-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-container);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--surface-card-border);
+}
+
+.toggle-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.toggle-caption {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* Material 3 Toggle Switch */
+.switch-toggle {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 28px;
+}
+
+.switch-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--surface-container-highest);
+  transition: 0.3s;
+  border-radius: 34px;
+  border: 2px solid var(--text-dim);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--text-muted);
+  transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--md-primary);
+  border-color: var(--md-primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+  background-color: var(--md-on-primary);
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATION COMPONENT
+   ========================================================================== */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--surface-container-highest);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-elevation-2);
+  font-size: 13.5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+  animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.toast img {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.toast.removing {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVENESS & MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 900px) {
+  .planner-body {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-days-sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--surface-card-border);
+    padding: 16px;
+  }
+
+  .day-pills-list {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .day-pill-btn {
+    white-space: nowrap;
+    padding: 8px 16px;
+  }
+
+  .planner-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .planner-header .btn-secondary {
+    width: 100%;
+  }
+
+  .welcome-card {
+    padding: 40px 24px;
+  }
+
+  .welcome-header .brand-logo {
+    font-size: 46px;
+  }
+}
+
+@media (max-width: 580px) {
+  .app-root {
+    padding: 12px 8px;
+  }
+
+  .dashboard-card {
+    padding: 22px 18px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .dashboard-header .header-right {
+    width: 100%;
+  }
+
+  .dashboard-header .header-right .btn {
+    width: 100%;
+  }
+
+  .current-day-headline {
+    font-size: 26px;
+  }
+
+  .category-toggle-group {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-footer {
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+
+  .dashboard-footer .btn {
+    width: 100%;
+  }
+}
