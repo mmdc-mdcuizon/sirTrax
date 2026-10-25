@@ -1,0 +1,128 @@
+{
+  "Monday": [
+    {
+      "id": "sample-1",
+      "text": "Take vitamins & hydrate",
+      "category": "Health",
+      "completed": false,
+      "repeatsWeekly": true
+    },
+    {
+      "id": "sample-2",
+      "text": "Review WebSys documentation & lecture notes",
+      "category": "School",
+      "completed": false,
+      "repeatsWeekly": true
+    },
+    {
+      "id": "sample-3",
+      "text": "Attend sprint sync & review pull requests",
+      "category": "Work",
+      "completed": false,
+      "repeatsWeekly": true
+    }
+  ],
+  "Tuesday": [
+    {
+      "id": "sample-4",
+      "text": "30-minute cardio & stretch routine",
+      "category": "Health",
+      "completed": false,
+      "repeatsWeekly": true
+    },
+    {
+      "id": "sample-5",
+      "text": "Core engineering project milestone",
+      "category": "Work",
+      "completed": false,
+      "repeatsWeekly": true
+    }
+  ],
+  "Wednesday": [
+    {
+      "id": "sample-6",
+      "text": "Mid-week lab assignment submission",
+      "category": "School",
+      "completed": false,
+      "repeatsWeekly": true
+    },
+    {
+      "id": "sample-7",
+      "text": "Deep work focus block (no meetings)",
+      "category": "Work",
+      "completed": false,
+      "repeatsWeekly": true
+    }
+  ],
+  "Thursday": [
+    {
+      "id": "sample-8",
+      "text": "Brisk walk & mindfulness after meal",
+      "category": "Health",
+      "completed": false,
+      "repeatsWeekly": true
+    },
+    {
+      "id": "sample-9",
+      "text": "Code review & refactoring session",
+      "category": "Work",
+      "completed": false,
+      "repeatsWeekly": true
+    }
+  ],
+  "Friday": [
+    {
+      "id": "sample-10",
+      "text": "Weekly project retrospective & demo",
+      "category": "Work",
+      "completed": false,
+      "repeatsWeekly": true
+    },
+    {
+      "id": "sample-11",
+      "text": "Submit study group log & quiz prep",
+      "category": "School",
+      "completed": false,
+      "repeatsWeekly": true
+    }
+  ],
+  "Saturday": [
+    {
+      "id": "sample-12",
+      "text": "Outdoor running & hydration reset",
+      "category": "Health",
+      "completed": false,
+      "repeatsWeekly": true
+    }
+  ],
+  "Sunday": [
+    {
+      "id": "sample-13",
+      "text": "Prepare weekly schedule & meal prep",
+      "category": "Health",
+      "completed": false,
+      "repeatsWeekly": true
+    },
+    {
+      "id": "sample-14",
+      "text": "Review upcoming university syllabus",
+      "category": "School",
+      "completed": false,
+      "repeatsWeekly": true
+    },
+    {
+      "id": "trax_mvnus59e_hn3yje",
+      "text": "ms2 sync test brave",
+      "category": "Work",
+      "completed": false,
+      "repeatsWeekly": false
+    },
+    {
+      "id": "trax_mvnusewp_nqj4ye",
+      "text": "ms2 sync chrome",
+      "category": "School",
+      "completed": true,
+      "repeatsWeekly": false
+    }
+  ]
+}

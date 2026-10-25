@@ -1,4 +1,3 @@
-
 (function () {
   'use strict';
 
@@ -127,6 +126,55 @@
     toastContainer: document.getElementById('toast-container')
   };
 
+  // 3.5. BACKEND API SERVICE (EXPRESS REST INTEGRATION)
+  // [MS2 ADDITION: Async service layer communicating with Express backend]
+
+  const API_BASE = '/api/routines';
+
+  const apiService = {
+    async getCadence() {
+      const res = await fetch(API_BASE);
+      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+      const json = await res.json();
+      return json.data;
+    },
+
+    async addRoutine(day, task) {
+      const res = await fetch(API_BASE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ day, task })
+      });
+      if (!res.ok) throw new Error(`Failed to save routine (${res.status})`);
+      const json = await res.json();
+      return json.data;
+    },
+
+    async toggleTask(day, taskId) {
+      const res = await fetch(`${API_BASE}/toggle`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ day, taskId })
+      });
+      if (!res.ok) throw new Error(`Failed to toggle task (${res.status})`);
+      const json = await res.json();
+      return json.data;
+    },
+
+    async deleteTask(day, id) {
+      const res = await fetch(`${API_BASE}/${encodeURIComponent(day)}/${encodeURIComponent(id)}`, {
+        method: 'DELETE'
+      });
+      if (!res.ok) throw new Error(`Failed to delete task (${res.status})`);
+      return true;
+    },
+
+    async triggerRollover() {
+      const res = await fetch(`${API_BASE}/reset-rollover`, { method: 'POST' });
+      return res.ok;
+    }
+  };
+
   // 4. UTILITIES & SECURITY HELPERS
   
   /**
@@ -190,10 +238,11 @@
   // 5. STORAGE & CADENCE ENGINE LOGIC
 
   /**
-   * Load cadence data from localStorage or initialize with defaults.
+   * Load cadence data from Express backend (with localStorage fallback).
    * Auto-resets completion state if a new day has arrived.
+   * [MS2 ADDITION: Updated to async to load centralized server routines]
    */
-  function initCadenceEngine() {
+  async function initCadenceEngine() {
     const now = new Date();
     // Native weekday detection: "Monday", "Tuesday", etc.
     state.todayDayName = now.toLocaleDateString('en-US', { weekday: 'long' });
@@ -207,27 +256,45 @@
 
     state.activeSetupDay = state.todayDayName;
 
-    // Load cadence from localStorage
-    const savedCadence = localStorage.getItem(STORAGE_KEYS.CADENCE);
-    if (savedCadence) {
-      try {
-        state.cadence = JSON.parse(savedCadence);
-        // Ensure every weekday key exists
-        DAYS_OF_WEEK.forEach(day => {
-          if (!Array.isArray(state.cadence[day])) {
-            state.cadence[day] = [];
-          }
-        });
-      } catch (e) {
-        console.error('Failed to parse saved cadence, falling back to defaults:', e);
+    // [MS2 ADDITION: 1. Attempt to fetch latest routines from Express server]
+    let loadedFromServer = false;
+    try {
+      const serverData = await apiService.getCadence();
+      if (serverData && typeof serverData === 'object') {
+        state.cadence = serverData;
+        loadedFromServer = true;
+        // Keep localStorage synchronized as an offline cache
+        saveCadenceToStorage();
+      }
+    } catch (err) {
+      console.warn('Backend unavailable, falling back to localStorage cache:', err);
+      showToast('Offline cache active (server unreachable)', 'info');
+    }
+
+    // [MS2 ADDITION: 2. Fallback to localStorage if server did not respond]
+    if (!loadedFromServer) {
+      const savedCadence = localStorage.getItem(STORAGE_KEYS.CADENCE);
+      if (savedCadence) {
+        try {
+          state.cadence = JSON.parse(savedCadence);
+        } catch (e) {
+          console.error('Failed to parse saved cadence, falling back to defaults:', e);
+          state.cadence = JSON.parse(JSON.stringify(DEFAULT_CADENCE));
+          saveCadenceToStorage();
+        }
+      } else {
+        // First time launch: initialize with default cadence
         state.cadence = JSON.parse(JSON.stringify(DEFAULT_CADENCE));
         saveCadenceToStorage();
       }
-    } else {
-      // First time launch: initialize with default cadence
-      state.cadence = JSON.parse(JSON.stringify(DEFAULT_CADENCE));
-      saveCadenceToStorage();
     }
+
+    // Ensure every weekday key exists
+    DAYS_OF_WEEK.forEach(day => {
+      if (!Array.isArray(state.cadence[day])) {
+        state.cadence[day] = [];
+      }
+    });
 
     // Check last active date for Looping Weekly Routine logic
     const currentDateStr = now.toISOString().split('T')[0]; // "YYYY-MM-DD"
@@ -237,6 +304,20 @@
       // Date has rolled over! Auto-reset the completed status of repeating routines
       resetCompletedRoutinesForNewDay();
       localStorage.setItem(STORAGE_KEYS.LAST_DATE, currentDateStr);
+
+      // [MS2 ADDITION: Trigger backend rollover reset endpoint]
+      try {
+        await apiService.triggerRollover();
+      } catch (e) {
+        /* silent fallback if offline */
+      }
+    }
+
+    // [MS2 ADDITION: Re-render UI after async fetch completes]
+    if (DOM.viewDashboard && DOM.viewDashboard.classList.contains('active')) {
+      renderDashboard();
+    } else if (DOM.viewSetup && DOM.viewSetup.classList.contains('active')) {
+      renderSetupPlanner();
     }
   }
 
@@ -625,8 +706,9 @@
 
   /**
    * Save a routine from the Setup Modal into the selected day
+   * [MS2 ADDITION: Made async to persist to Express backend with optimistic UI]
    */
-  function handleSaveSetupRoutine() {
+  async function handleSaveSetupRoutine() {
     const textInput = DOM.modalInputTask ? DOM.modalInputTask.value.trim() : '';
     if (!textInput) {
       if (DOM.modalInputTask) DOM.modalInputTask.focus();
@@ -645,6 +727,7 @@
       state.cadence[state.activeSetupDay] = [];
     }
 
+    // Optimistic UI update
     state.cadence[state.activeSetupDay].push(newTask);
     saveCadenceToStorage();
 
@@ -655,13 +738,22 @@
 
     closeSetupModal();
     renderSetupPlanner();
-    showToast(`Added routine to ${state.activeSetupDay}!`, 'check');
+
+    // [MS2 ADDITION: Persist routine to Express backend]
+    try {
+      await apiService.addRoutine(state.activeSetupDay, newTask);
+      showToast(`Added routine to ${state.activeSetupDay}!`, 'check');
+    } catch (err) {
+      console.error('Server sync error on addRoutine:', err);
+      showToast('Saved locally (server sync failed)', 'info');
+    }
   }
 
   /**
    * Save a quick add task to today's routines
+   * [MS2 ADDITION: Made async to persist to Express backend with optimistic UI]
    */
-  function handleSaveQuickTask() {
+  async function handleSaveQuickTask() {
     const textInput = DOM.modalQuickInputTask ? DOM.modalQuickInputTask.value.trim() : '';
     if (!textInput) {
       if (DOM.modalQuickInputTask) DOM.modalQuickInputTask.focus();
@@ -680,23 +772,33 @@
       state.cadence[state.todayDayName] = [];
     }
 
+    // Optimistic UI update
     state.cadence[state.todayDayName].push(newTask);
     saveCadenceToStorage();
 
     closeQuickModal();
     renderDashboard();
-    showToast(`Added task for Today!`, 'check');
+
+    // [MS2 ADDITION: Persist quick task to Express backend]
+    try {
+      await apiService.addRoutine(state.todayDayName, newTask);
+      showToast(`Added task for Today!`, 'check');
+    } catch (err) {
+      console.error('Server sync error on handleSaveQuickTask:', err);
+      showToast('Saved locally (server sync failed)', 'info');
+    }
   }
 
   /**
    * Toggle completion state of a task on today's dashboard
-   * @param {string} taskId
+   * [MS2 ADDITION: Made async to sync toggle status with Express backend]
    */
-  function toggleTaskCompletion(taskId) {
+  async function toggleTaskCompletion(taskId) {
     const todayTasks = state.cadence[state.todayDayName] || [];
     const task = todayTasks.find(t => t.id === taskId);
     if (!task) return;
 
+    // Optimistic UI toggle
     task.completed = !task.completed;
     saveCadenceToStorage();
     renderDashboard();
@@ -712,13 +814,21 @@
         }, 600);
       }
     }
+
+    // [MS2 ADDITION: Persist task toggle to Express backend]
+    try {
+      await apiService.toggleTask(state.todayDayName, taskId);
+    } catch (err) {
+      console.error('Server sync error on toggleTask:', err);
+      showToast('Status updated locally (server offline)', 'info');
+    }
   }
 
   /**
    * Delete a task from today's dashboard
-   * @param {string} taskId
+   * [MS2 ADDITION: Made async to delete task from Express backend]
    */
-  function deleteTodayTask(taskId) {
+  async function deleteTodayTask(taskId) {
     const todayTasks = state.cadence[state.todayDayName] || [];
     const index = todayTasks.findIndex(t => t.id === taskId);
     if (index !== -1) {
@@ -726,14 +836,22 @@
       saveCadenceToStorage();
       renderDashboard();
       showToast(`Removed "${removed.text.substring(0, 20)}..."`, 'trash');
+
+      // [MS2 ADDITION: Remove task from Express backend]
+      try {
+        await apiService.deleteTask(state.todayDayName, taskId);
+      } catch (err) {
+        console.error('Server sync error on deleteTodayTask:', err);
+        showToast('Deleted locally (server sync pending)', 'info');
+      }
     }
   }
 
   /**
    * Delete a routine from the active day in Setup Planner
-   * @param {string} taskId
+   * [MS2 ADDITION: Made async to delete routine from Express backend]
    */
-  function deleteSetupRoutine(taskId) {
+  async function deleteSetupRoutine(taskId) {
     const dayTasks = state.cadence[state.activeSetupDay] || [];
     const index = dayTasks.findIndex(t => t.id === taskId);
     if (index !== -1) {
@@ -741,6 +859,14 @@
       saveCadenceToStorage();
       renderSetupPlanner();
       showToast(`Removed "${removed.text.substring(0, 20)}..."`, 'trash');
+
+      // [MS2 ADDITION: Remove routine from Express backend]
+      try {
+        await apiService.deleteTask(state.activeSetupDay, taskId);
+      } catch (err) {
+        console.error('Server sync error on deleteSetupRoutine:', err);
+        showToast('Deleted locally (server sync pending)', 'info');
+      }
     }
   }
 
@@ -911,16 +1037,38 @@
         }
       });
     }
+
+    // 11. [MS2 ADDITION: Multi-Tab Synchronization on Window Focus]
+    // Silently pulls fresh routine state from Express when switching tabs
+    window.addEventListener('focus', async () => {
+      try {
+        const freshCadence = await apiService.getCadence();
+        if (freshCadence && typeof freshCadence === 'object') {
+          state.cadence = freshCadence;
+          saveCadenceToStorage();
+          if (state.activeSetupDay) updateDayPillsSidebar();
+          renderDashboardTasks(state.cadence[state.todayDayName] || []);
+          updateDashboardMetrics(state.cadence[state.todayDayName] || []);
+        }
+      } catch (e) {
+        // Silent sync failure when server is unreachable
+      }
+    });
   }
 
-  // 12. INITIALIZATION
+// 12. INITIALIZATION
   
-  function init() {
-    initCadenceEngine();
+  async function init() {
     bindEvents();
+    await initCadenceEngine();
 
-    // Default to Welcome Screen on load
-    switchView('view-welcome');
+    // Check if user has already onboarded so refresh doesn't reset to welcome view
+    const hasOnboarded = localStorage.getItem(STORAGE_KEYS.HAS_ONBOARDED);
+    if (hasOnboarded === 'true') {
+      switchView('view-dashboard');
+    } else {
+      switchView('view-welcome');
+    }
   }
 
   // Run on DOM Ready

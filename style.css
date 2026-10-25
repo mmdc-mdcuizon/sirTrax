@@ -1424,3 +1424,39 @@ input:checked + .slider:before {
     width: 100%;
   }
 }
+
+/* MS1 feedback about dun sa device screens */
+
+@media (max-width: 360px) {
+  .app-root {
+    padding: 8px 4px;
+  }
+
+  .dashboard-card,
+  .welcome-card,
+  .setup-card {
+    padding: 16px 10px;
+    border-radius: var(--radius-lg);
+  }
+
+  .task-row-card,
+  .routine-row-card {
+    padding: 10px 10px;
+    gap: 8px;
+  }
+
+  .task-title,
+  .routine-title-text {
+    font-size: 13.5px;
+  }
+
+  .category-badge {
+    padding: 2px 6px;
+    font-size: 10.5px;
+  }
+
+  .filter-pill {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
