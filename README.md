@@ -24,10 +24,10 @@ A clean, browser-based weekly planner designed to build daily habits and avoid a
 
 ## 📑 Table of Contents
 - [📸 Screenshots & Structure](#-screenshots--structure)
-- [📋 Project Planning & Worksheet](#-project-planning--worksheet)
+- [📋 Project Planning & Worksheet (Updated for MS2)](#-project-planning--worksheet)
 - [📌 1. Project Purpose & Overview](#-1-project-purpose--overview)
 - [✨ 2. Features & Interaction Areas](#-2-features--interaction-areas)
-- [🤖 3. AI Usage & Learning Reflection](#-3-ai-usage--learning-reflection)
+- [🤖 3. AI Usage & Learning Reflection (Updated for MS2)](#-3-ai-usage--learning-reflection)
 - [🚀 4. How to Run Locally](#-4-how-to-run-locally)
 
 ---
@@ -58,7 +58,7 @@ A clean, browser-based weekly planner designed to build daily habits and avoid a
 
 This project was built step by step following our course weekly requirements. For details on how I planned the pages, ordered the features, managed project scope, and reflected on my coding workflow, here is the full planning worksheet:
 
-📄 <strong><a href="https://docs.google.com/spreadsheets/d/1sG5ybAjzruohheh9A48HBCbZCPGFaekcK2JMmOz7NbI/edit?usp=drive_link" target="_blank" rel="noopener noreferrer">View Full Application Development Workflow Worksheet</a></strong>
+📄 <strong><a href="https://docs.google.com/spreadsheets/d/1sG5ybAjzruohheh9A48HBCbZCPGFaekcK2JMmOz7NbI/edit?usp=drive_link" target="_blank" rel="noopener noreferrer">View Full Application Development Workflow Worksheet (UPDATED FOR MS2)</a></strong>
 
 ---
 
@@ -110,7 +110,9 @@ In compliance with our course **AI Use Statement** policy, I used AI tools as a 
 3. **Accessibility (ARIA) Corrections:** When I prompted AI for screen-reader accessibility, it often produced incomplete or improper tags. I manually reviewed and set proper ARIA dialog roles, radio groups, tabs, and live announcements so the app genuinely meets accessibility standards.
 4. **Keeping Scope Realistic:** My original dream idea was a voice-to-text task creator that used AI to automatically sort reminders into categories. Recognizing that audio streaming and natural language processing were way too complicated for Milestone 1, I cut those out to focus on delivering a clean, solid, working web application first.
 
-📄 <strong><a href="https://docs.google.com/document/d/1Fhx7qHvvBqz0MmN6DRmlRb6HSddC1NUR1OYq3cHr0Sg/edit?usp=drive_link" target="_blank" rel="noopener noreferrer">View Full AI Use Statement Document</a></strong>
+📄 <strong><a href="https://docs.google.com/document/d/1Fhx7qHvvBqz0MmN6DRmlRb6HSddC1NUR1OYq3cHr0Sg/edit?usp=drive_link" target="_blank" rel="noopener noreferrer">View Full AI Use Statement Document | Milestone 1</a></strong>
+
+📄 <strong><a href="https://docs.google.com/document/d/1DZej81rkalx_8Hg6py7Od1NrImXga5VDlm8YjpY-WbI/edit?usp=sharing" target="_blank" rel="noopener noreferrer">View Full AI Use Statement Document | Milestone 2</a></strong>
 
 ---
 
