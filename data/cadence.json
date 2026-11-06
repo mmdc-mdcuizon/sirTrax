@@ -20,6 +20,13 @@
       "category": "Work",
       "completed": false,
       "repeatsWeekly": true
+    },
+    {
+      "id": "trax_mvnzp3ba_ue45gb",
+      "text": "trying to add task on monday",
+      "category": "Work",
+      "completed": false,
+      "repeatsWeekly": true
     }
   ],
   "Tuesday": [
