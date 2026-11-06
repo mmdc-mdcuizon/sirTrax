@@ -121,4 +121,17 @@ In compliance with our course **AI Use Statement** policy, I used AI tools as a 
 ### Setup Steps
 1. Clone this repository:
    ```bash
-   git clone [https://github.com/](https://github.com/)<your-username>/sirTrax.git
+   git clone https://github.com/mmdc-mdcuizon/sirTrax.git
+
+2. Navigate into the project directory:
+   ```bash
+   cd sirTrax
+3. Install the required dependencies:
+   ```bash
+   npm install
+4. Start the Express server:
+   ```bash
+   npm start
+5. Open your web browser and navigate to:
+   ```bash
+   http://localhost:3001
